@@ -86,7 +86,7 @@ export default function TransactionForm({
             {[
               { id: "expense", label: "Expense", icon: FiTrendingDown },
               { id: "income", label: "Income", icon: FiTrendingUp },
-            ].map(({ id, label, icon: Icon }) => {
+            ].map(({ id, label, icon }) => {
               const isActive = form.type === id;
               return (
                 <button
@@ -99,7 +99,7 @@ export default function TransactionForm({
                         : "text-slate-500 hover:text-slate-700 hover:bg-slate-200/50"
                     }`}
                 >
-                  <Icon className="w-4 h-4" />
+                  {icon({ className: "w-4 h-4" })}
                   {label}
                 </button>
               );
