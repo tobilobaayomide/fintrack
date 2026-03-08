@@ -19,7 +19,6 @@ export default function DashboardPage({
   return (
     <div className="space-y-8 md:space-y-5">
 
-      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Dashboard</h1>
         <p className="text-sm text-slate-500 mt-1.5 font-medium">
@@ -56,7 +55,7 @@ export default function DashboardPage({
           <h2 className="text-lg font-bold text-slate-900 tracking-tight">
             Recent Transactions
           </h2>
-          <Button onClick={onViewAll} variant="ghost" size="sm" className="mr-12">
+          <Button onClick={onViewAll} variant="ghost" size="sm" className="md:mr-12">
             View All
           </Button>
         </div>
