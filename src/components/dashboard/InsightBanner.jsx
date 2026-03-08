@@ -87,7 +87,7 @@ export default function InsightBanner({ transactions, currentMonth, getBudgetSta
 
   useEffect(() => {
     if (currentIndex >= insights.length) {
-      setCurrentIndex(0)
+      setTimeout(() => setCurrentIndex(0), 0)
     }
   }, [insights.length, currentIndex])
 
