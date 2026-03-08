@@ -77,7 +77,7 @@ export default function TransactionFilters({ filters, onFilterChange }) {
           </select>
         </div>
 
-        <div className="w-36">
+        <div className="hidden md:block w-36">
           <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
             Type
           </label>
@@ -98,7 +98,7 @@ export default function TransactionFilters({ filters, onFilterChange }) {
           </select>
         </div>
 
-        <div className="flex-1 min-w-[150px]">
+        <div className="hidden md:block flex-1 min-w-[150px]">
           <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
             From
           </label>
@@ -114,7 +114,7 @@ export default function TransactionFilters({ filters, onFilterChange }) {
           />
         </div>
 
-        <div className="flex-1 min-w-[150px]">
+        <div className="hidden md:block flex-1 min-w-[150px]">
           <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">
             To
           </label>

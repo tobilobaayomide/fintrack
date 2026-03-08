@@ -7,10 +7,9 @@ export default function BudgetModal({ isOpen, onClose, cat, spent, budget, onSav
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    if (isOpen) {
-      setInputValue(budget?.limit || "");
-    }
-  }, [isOpen, budget]);
+    if (!isOpen) return
+    setTimeout(() => setInputValue(budget?.limit || ""), 0)
+  }, [isOpen, budget])
 
   function handleSave() {
     const val = Number(inputValue);

@@ -6,6 +6,7 @@ import { useBudgets } from "./hooks/useBudgets"
 import { useFilters } from "./hooks/useFilters"
 import { useTransactionForm } from "./hooks/useTransactionForm"
 import Sidebar from "./components/layout/Sidebar"
+import MobileNavBar from "./components/layout/MobileNavBar"
 import { TransactionForm } from "./components/transactions"
 import DashboardPage from "./pages/DashboardPage"
 import TransactionsPage from "./pages/TransactionsPage"
@@ -19,6 +20,7 @@ export default function App() {
     const now = new Date()
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`
   })
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
 
   const { addTransaction, deleteTransaction, editTransaction, getByMonth, getTotals } = useTransactions()
   const { getBudget, setBudget, getBudgetStatus } = useBudgets()
@@ -42,72 +44,84 @@ export default function App() {
         }}
       />
       
-      <div className="flex min-h-screen bg-slate-50 selection:bg-blue-100 selection:text-blue-900">
+      <div className={`flex min-h-screen bg-slate-50 selection:bg-blue-100 selection:text-blue-900 ${isSidebarOpen ? "overflow-hidden" : ""}`}>
 
         <Sidebar
           activePath={location.pathname}
-          onTabChange={(path) => navigate(path)}
+          onTabChange={(path) => {
+            navigate(path)
+            setSidebarOpen(false)
+          }}
           currentMonth={currentMonth}
           onMonthChange={setCurrentMonth}
           onAddClick={form.openForNew}
+          isOpen={isSidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-8xl mx-auto px-6 py-10">
+        <main className={`flex-1 transition-all duration-300 ${isSidebarOpen ? "overflow-hidden pointer-events-none blur-sm select-none" : "overflow-y-auto"}`}>
+          <div className="max-w-8xl mx-auto px-4 sm:px-6 md:px-8 py-6 md:py-10">
+
+            <MobileNavBar
+              currentMonth={currentMonth}
+              onOpenMenu={() => setSidebarOpen(true)}
+            />
+
             <Routes>
-              <Route index element={<Navigate to="/dashboard" replace />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <DashboardPage
-                    currentMonth={currentMonth}
-                    totals={totals}
-                    monthTransactions={monthTransactions}
-                    getBudget={getBudget}
-                    setBudget={setBudget}
-                    getBudgetStatus={getBudgetStatus}
-                    onDeleteTransaction={deleteTransaction}
-                    onEditTransaction={form.openForEdit}
-                    onViewAll={() => navigate("/transactions")}
-                  />
-                }
-              />
-              <Route
-                path="/transactions"
-                element={
-                  <TransactionsPage
-                    filters={filters}
-                    onFilterChange={setFilters}
-                    filteredTransactions={filteredTransactions}
-                    onDeleteTransaction={deleteTransaction}
-                    onEditTransaction={form.openForEdit}
-                    onAddClick={form.openForNew}
-                  />
-                }
-              />
-              <Route
-                path="/budgets"
-                element={
-                  <BudgetsPage
-                    currentMonth={currentMonth}
-                    monthTransactions={monthTransactions}
-                    getBudget={getBudget}
-                    setBudget={setBudget}
-                    getBudgetStatus={getBudgetStatus}
-                  />
-                }
-              />
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
-            </Routes>
+  <Route
+    path="/"
+    element={
+      <DashboardPage
+        currentMonth={currentMonth}
+        totals={totals}
+        monthTransactions={monthTransactions}
+        getBudget={getBudget}
+        setBudget={setBudget}
+        getBudgetStatus={getBudgetStatus}
+        onDeleteTransaction={deleteTransaction}
+        onEditTransaction={form.openForEdit}
+        onViewAll={() => navigate("/transactions")}
+      />
+    }
+  />
+  <Route
+    path="/transactions"
+    element={
+      <TransactionsPage
+        filters={filters}
+        onFilterChange={setFilters}
+        filteredTransactions={filteredTransactions}
+        onDeleteTransaction={deleteTransaction}
+        onEditTransaction={form.openForEdit}
+        onAddClick={form.openForNew}
+      />
+    }
+  />
+  <Route
+    path="/budgets"
+    element={
+      <BudgetsPage
+        currentMonth={currentMonth}
+        monthTransactions={monthTransactions}
+        getBudget={getBudget}
+        setBudget={setBudget}
+        getBudgetStatus={getBudgetStatus}
+      />
+    }
+  />
+  <Route path="*" element={<Navigate to="/" replace />} />
+</Routes>
           </div>
         </main>
 
-        <TransactionForm
-          isOpen={form.isOpen}
-          onClose={form.close}
-          onSubmit={form.submit}
-          editingTransaction={form.editingTransaction}
-        />
+        {form.isOpen && (
+          <TransactionForm
+            isOpen
+            onClose={form.close}
+            onSubmit={form.submit}
+            editingTransaction={form.editingTransaction}
+          />
+        )}
 
       </div>
     </>

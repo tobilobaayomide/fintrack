@@ -1,16 +1,26 @@
-# React + Vite
+# FinTrack – Personal Finance Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple personal finance tracker built with React and Vite. It lets users log income/expenses, visualize spending, manage category budgets, and filter transactions—all persisted in localStorage so it works offline.
 
-Currently, two official plugins are available:
+## What I built & why
+- **Dashboard-first UX:** At-a-glance cards (income, expenses, net), budget health, and spending breakdown to answer “How am I doing this month?” quickly.
+- **Fast entry:** Slide-in transaction drawer, quick-add presets, and inline edit/delete keep flow snappy.
+- **Budgets per category:** Simple limits with over/near-safe states to encourage awareness without heavy setup.
+- **Filters & search:** Category/type/text/date filters to quickly locate transactions; designed to stay useful even as data grows.
+- **Persistence without backend:** `useLocalStorage` keeps everything on-device—no setup required.
+- **Responsive layout:** Sticky mobile top bar + drawer sidebar, collapsing filters for small screens.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What I’d improve with more time
+- CSV/Excel export and printable monthly summary.
+- Recurring/templated transactions (salary, rent) with auto-rollover.
+- Savings goals with target/date progress.
+- Multi-currency display with user-provided FX rates.
+- Light/dark theme toggle with persisted preference.
+- Accessibility audit (focus order, reduced motion, high-contrast pass) and keyboard shortcuts.
 
-## React Compiler
+## Challenges
+- Balancing a compact mobile layout with rich controls (filters, budgets, charts) required careful responsive tweaks (drawer nav, collapsible date filters, fixed mobile bar).
+- Managing form state for add/edit while avoiding React lint warnings around effects and setState timing.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Time spent (approx.)
+~6–7 hours across design, implementation, responsive polish, and linting.
