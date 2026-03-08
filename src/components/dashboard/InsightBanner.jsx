@@ -68,7 +68,7 @@ export default function InsightBanner({ transactions, currentMonth, getBudgetSta
       dotBg: "bg-rose-400"
     },
     warning: {
-      wrap:  "bg-navy-950 shadow-slate-900/20",
+      wrap:  "bg-[#0a0f1c] shadow-slate-900/20",
       icon:  <FiTrendingDown className="w-5 h-5 text-amber-400" />,
       dotActive: "bg-amber-400",
       dotBg: "bg-slate-700"
@@ -81,11 +81,13 @@ export default function InsightBanner({ transactions, currentMonth, getBudgetSta
     }
   }
 
-  const active = insights[currentIndex] || insights[0]
+  const safeIndex = Math.min(currentIndex, Math.max(insights.length - 1, 0))
+  const active = insights[safeIndex] || insights[0]
   const theme = THEMES[active.type]
 
   useEffect(() => {
     if (currentIndex >= insights.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCurrentIndex(0)
     }
   }, [insights.length, currentIndex])
