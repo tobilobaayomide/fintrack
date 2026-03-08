@@ -87,7 +87,6 @@ export default function InsightBanner({ transactions, currentMonth, getBudgetSta
 
   useEffect(() => {
     if (currentIndex >= insights.length) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCurrentIndex(0)
     }
   }, [insights.length, currentIndex])
