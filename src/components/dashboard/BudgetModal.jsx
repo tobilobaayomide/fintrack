@@ -8,8 +8,8 @@ export default function BudgetModal({ isOpen, onClose, cat, spent, budget, onSav
 
   useEffect(() => {
     if (!isOpen) return
-    setInputValue(budget?.limit || "");
-  }, [isOpen, budget]);
+    setTimeout(() => setInputValue(budget?.limit || ""), 0)
+  }, [isOpen, budget])
 
   function handleSave() {
     const val = Number(inputValue);
