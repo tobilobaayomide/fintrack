@@ -7,9 +7,8 @@ export default function BudgetModal({ isOpen, onClose, cat, spent, budget, onSav
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    if (isOpen) {
-      setInputValue(budget?.limit || "");
-    }
+    if (!isOpen) return
+    setInputValue(budget?.limit || "");
   }, [isOpen, budget]);
 
   function handleSave() {
