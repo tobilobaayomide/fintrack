@@ -62,7 +62,7 @@ export default function TransactionItem({ transaction, onDelete, onEdit }) {
           <div className="flex items-center gap-1.5 bg-rose-50 border border-rose-100 rounded-xl px-2 py-1">
             <span className="text-xs font-semibold text-rose-600 mr-1">Delete?</span>
             <button
-              onClick={() => onDelete(transaction.id)}
+              onClick={() => onDelete(transaction._id)}
               className="p-1 bg-rose-500 hover:bg-rose-600 text-white rounded-lg transition-colors"
             >
               <FiCheck className="w-3 h-3" />
