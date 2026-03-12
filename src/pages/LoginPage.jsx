@@ -35,7 +35,7 @@ function LeftPanel() {
       {/* Illustration + tagline — single centrepiece block */}
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-10 gap-8">
         <img
-          src="/assets/illustrator1.svg"
+          src="/illustrator1.svg"
           alt="Finance illustration"
           className="w-full max-w-[420px]"
         />
