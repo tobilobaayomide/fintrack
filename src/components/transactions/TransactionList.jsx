@@ -26,7 +26,7 @@ export default function TransactionList({ transactions, onEdit, onDelete, compac
     <div className="flex flex-col gap-1">
       {displayTransactions.map(tx => (
         <TransactionItem 
-          key={tx.id} 
+          key={tx._id} 
           transaction={tx} 
           onEdit={onEdit} 
           onDelete={onDelete} 
