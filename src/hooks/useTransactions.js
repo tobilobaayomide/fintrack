@@ -1,28 +1,55 @@
-import { useLocalStorage } from "./useLocalStorage"
+import { useState, useEffect } from "react"
+import api from "../api/axios"
 import toast from "react-hot-toast"
 
 export function useTransactions() {
-  const [transactions, setTransactions] = useLocalStorage("fintrack_transactions", [])
+  const [transactions, setTransactions] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const addTransaction = (tx) => {
-    const id = typeof crypto !== "undefined" && crypto.randomUUID
-      ? crypto.randomUUID()
-      : `${Date.now()}-${Math.random().toString(16).slice(2)}`
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const { data } = await api.get("/transactions")
+        setTransactions(data)
+      } catch (error) {
+        toast.error("Failed to load transactions")
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTransactions()
+  }, [])
 
-    setTransactions(prev => [...prev, { ...tx, id }])
-    toast.success("Transaction added!")
+  const addTransaction = async (tx) => {
+    try {
+      const { data } = await api.post("/transactions", tx)
+      setTransactions(prev => [data, ...prev])
+      toast.success("Transaction added!")
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to add transaction")
+    }
   }
 
-  const deleteTransaction = (id) => {
-    setTransactions(prev => prev.filter(tx => tx.id !== id))
-    toast.error("Transaction deleted.")
+  const deleteTransaction = async (id) => {
+    try {
+      await api.delete(`/transactions/${id}`)
+      setTransactions(prev => prev.filter(tx => tx._id !== id))
+      toast.error("Transaction deleted.")
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete transaction")
+    }
   }
 
-  const editTransaction = (id, updatedData) => {
-    setTransactions(prev =>
-      prev.map(tx => tx.id === id ? { ...tx, ...updatedData } : tx)
-    )
-    toast.success("Changes saved.")
+  const editTransaction = async (id, updatedData) => {
+    try {
+      const { data } = await api.put(`/transactions/${id}`, updatedData)
+      setTransactions(prev =>
+        prev.map(tx => tx._id === id ? data : tx)
+      )
+      toast.success("Changes saved.")
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update transaction")
+    }
   }
 
   const getByMonth = (month) =>
@@ -39,5 +66,5 @@ export function useTransactions() {
     return { income, expenses, net: income - expenses }
   }
 
-  return { transactions, addTransaction, deleteTransaction, editTransaction, getByMonth, getTotals }
+  return { transactions, loading, addTransaction, deleteTransaction, editTransaction, getByMonth, getTotals }
 }

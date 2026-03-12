@@ -21,7 +21,7 @@ export function useTransactionForm(addTransaction, editTransaction) {
 
   const submit = (data) => {
     if (editingTransaction) {
-      editTransaction(editingTransaction.id, data)
+      editTransaction(editingTransaction._id, data)
     } else {
       addTransaction(data)
     }
